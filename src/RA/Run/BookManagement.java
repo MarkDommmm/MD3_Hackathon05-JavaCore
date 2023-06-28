@@ -164,7 +164,7 @@ public class BookManagement {
         }
     }
 
-    public static void addProduct() {
+     public static void addProduct() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Nhập số sản phẩm mới: ");
         int numProducts = scanner.nextInt();
@@ -174,24 +174,24 @@ public class BookManagement {
             Product newProduct = new Product();
             newProduct.inputData();
             showCatalog();
-            Catalog newcatalog = null;
+            Catalog newCatalog = null;
             System.out.println("Chọn ID danh mục cần thêm: ");
-            while (true) {
-//                int idCatalog = InputMethods.getInteger();
-                boolean flag = true;
-                for (Catalog catalog1 : catalogController.getCatalogList()) {
-                    flag = false;
-                    newcatalog = catalog1;
+            boolean flag = true;
+            while (flag) {
+                int idCatalog = InputMethods.getInteger();
+                for (Catalog catalog : catalogController.getCatalogList()) {
+                    if (catalog.getCatalogId() == idCatalog) {
+                        newCatalog = catalog;
+                        flag = false;
+                        break;
+                    }
                 }
                 if (flag) {
-                    System.out.println("Id không tồn tại");
-                } else {
-                    break;
+                    System.out.println("ID không tồn tại. Vui lòng nhập lại: ");
                 }
             }
-            newProduct.setCatalog(newcatalog);
+            newProduct.setCatalog(newCatalog);
             productController.save(newProduct);
-
         }
         System.out.println("Danh mục đã được thêm mới thành công.");
         showProduct();
